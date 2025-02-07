@@ -1,0 +1,29 @@
+# Usage
+#   Start:          docker compose up
+#   With helpers:   docker compose -f docker-compose.yml -f ./dev/docker-compose.dev.yml up
+#   Stop:           docker compose down
+#   Destroy:        docker compose -f docker-compose.yml -f ./dev/docker-compose.dev.yml down -v --remove-orphans
+
+name: comfyui
+
+services:
+  comfyui_cpu:
+    build:
+      context: ./ComfyUI
+      dockerfile: Dockerfile
+    container_name: comfyui_cpu
+    networks:
+      - supabase-network
+    restart: always
+    volumes:
+      - ./ComfyUI:/app  # ComfyUI kaynaklarını konteynere mount et
+    working_dir: /app
+    command: [ "python3", "main.py", "--cpu", "--listen=0.0.0.0" ]
+    ports:
+      - "8188:8188"
+volumes:
+  db-config:
+
+networks:
+  supabase-network:
+    external: true
