@@ -17,6 +17,7 @@ scipy
 tqdm
 psutil
 onnxruntime
+insightface
 
 #non essential dependencies:
 kornia>=0.7.1
